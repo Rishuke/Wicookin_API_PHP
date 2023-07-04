@@ -3,12 +3,12 @@
 function createMember(string $lastname, 
                     string $firstname,
                     string $email,
-                    string $phonenumber, 
-                    string $gender,
-                    string $dateofbirth, 
+                    ?string $phonenumber, 
+                    ?string $gender,
+                    ?string $dateofbirth, 
                     string $password, 
-                    string $membertype,  
-                    string $profilepicture): void
+                    string $type,  
+                    ?string $profilepicture)
 {
     require_once __DIR__ . "/../../database/connection.php";
 
@@ -16,38 +16,39 @@ function createMember(string $lastname,
 
     $createMemberQuery = $databaseConnection->prepare("
         INSERT INTO members(
-            last_name,
-            first_name,
+            lastname,
+            firstname,
             email,
-            phone_number,
+            phonenumber,
             gender,
             date_of_birth,
             password,
-            member_type,
+            type,
             profile_picture
         ) VALUES (
-            :last_name,
-            :first_name,
+            :lastname,
+            :firstname,
             :email,
-            :phone_number,
+            :phonenumber,
             :gender,
             :date_of_birth,
             :password,
-            :member_type,
+            :type,
             :profile_picture
         );   
     ");
 
     $createMemberQuery->execute([
-        "last_name" => htmlspecialchars($lastname),
-        "first_name" => htmlspecialchars($firstname),
+        "lastname" => htmlspecialchars($lastname),
+        "firstname" => htmlspecialchars($firstname),
         "email" => htmlspecialchars($email),
-        "phone_number" => htmlspecialchars($phonenumber),
-        "gender" => htmlspecialchars($gender),
-        "date_of_birth" => htmlspecialchars($dateofbirth),
+        "phonenumber" => isset($phonenumber) ? htmlspecialchars($phonenumber) : null,
+        "gender" =>  isset($gender) ? htmlspecialchars($gender) : null,
+        "date_of_birth" => isset($dateofbirth) ? htmlspecialchars($dateofbirth) : null,
         "password" => password_hash(htmlspecialchars($password), PASSWORD_BCRYPT),
-        "member_type" => htmlspecialchars($membertype),
-        "profile_picture" => htmlspecialchars($profilepicture),
+        "type" => htmlspecialchars($type),
+        "profile_picture" => isset($profilepicture) ? htmlspecialchars($profilepicture) : null
+        
     ]);
 
 }

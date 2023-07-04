@@ -2,17 +2,29 @@
 
 require_once __DIR__ . "/../../libraries/response.php";
 require_once __DIR__ . "/../../entities/members/get-members.php";
+require_once __DIR__ . "/../../entities/members/is-member-logged-in.php";
+require_once __DIR__ . "/../../libraries/header.php";
 
 try {
-    $members = getMembers();
+    
+    $token = getAuthorizationBearerToken(); 
 
-    echo jsonResponse(200, ["X-Server" => "Wicookin"], [
-        "success" => true,
-        "members" => $members
-    ]);
-} catch (Exception $exception) {
-    echo jsonResponse(500, [], [
+    if (!isMemberLoggedIn($token)) {
+      echo jsonResponse(401, [], [
         "success" => false,
-        "error" => $exception->getMessage()
+        "message" => "You are not logged in."
+      ]);
+  
+      return;
+    }
+  
+    echo jsonResponse(200, [], [
+      "success" => true,
+      "users" => getMembers()
+    ]);
+  } catch (Exception $exception) {
+    echo jsonResponse(500, [], [
+      "success" => false,
+      "message" => $exception->getMessage()
     ]);
 }

@@ -10,7 +10,30 @@ error_reporting(E_ALL);
 require_once __DIR__ . "/libraries/path.php";
 require_once __DIR__ . "/libraries/method.php";
 
-if (isPath("/wicookin.fr_api_php/members")) {
+if (isPath("/wicookin_api_php/authentification/login")) {
+    if (isPostMethod()) {
+        require_once __DIR__ . "/routes/authentification/login.php";
+        die();
+    }
+
+}
+
+if (isPath("/wicookin_api_php/authentification/register")) {
+
+    if (isPostMethod()) {
+        require_once __DIR__ . "/routes/authentification/register.php";
+        die();
+    }
+}
+
+if (isPath("wicookin_api_php/authentification/logout")) {
+    if (isPostMethod()) {
+        require_once __DIR__ . "/routes/authentification/logout.php";
+        die();
+    }
+}
+
+if (isPath("/wicookin_api_php/members")) {
     if (isGetMethod()) {
         require_once __DIR__ . "/routes/members/get.php";
         die();
@@ -18,7 +41,7 @@ if (isPath("/wicookin.fr_api_php/members")) {
         require_once __DIR__ . "/routes/members/post.php";
         die();
     }
-} else if (isPath("/wicookin.fr_api_php/members/:member")) {
+} else if (isPath("/wicookin_api_php/members/:member")) {
     if (isDeleteMethod()) {
         require_once __DIR__ . "/routes/members/delete.php";
         die();
