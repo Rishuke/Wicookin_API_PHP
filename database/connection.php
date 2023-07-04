@@ -2,14 +2,14 @@
 
 function getDatabaseConnection(): PDO
 {
-    require_once __DIR__ . "/settings.php";
+    require __DIR__ . "/settings.php";
 
-    
+    $databaseConnection = new PDO(
+        "$databaseDialect:host=$databaseHost:$databasePort;dbname=$databaseName;charset=utf8mb4",
+        $databaseUser,
+        $databasePassword);
 
-    return  $databaseConnection = new PDO(
-            "$databaseDialect:host=$databaseHostname:$databasePort;dbname=$databaseName",
-            $databaseUsername,
-            $databasePassword);
+    return  $databaseConnection;
 
 
 }

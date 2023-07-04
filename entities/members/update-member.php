@@ -8,7 +8,7 @@ function updateMember(string $id, $columns): void
 
     require_once __DIR__ . "/../../database/connection.php";
 
-    $authorizedColumns = ["last_name", "first_name", "email", "phone_number", "gender", "date_of_birth", "password", "member_type", "profile_picture"];
+    $authorizedColumns = ["lastname", "firstname", "email", "phonenumber", "gender", "date_of_birth", "password", "type", "profile_picture"];
 
     // Ajoutez ce bloc de code pour vérifier l'existence de l'ID du membre
     $databaseConnection = getDatabaseConnection();
